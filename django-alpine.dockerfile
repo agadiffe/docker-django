@@ -7,7 +7,8 @@ RUN	apk add --no-cache --virtual .build-deps \
 		python-dev \
 		mysql-client \
 		postgresql-client libpq \
-		sqlite     && pip install -r requirements.txt \
+		sqlite \
+	&& pip install -r /app/requirements.txt \
 	&& find /usr/local \
 		\( -type d -a -name test -o -name tests \) \
 		-o \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
