@@ -51,29 +51,29 @@ DATABASES = {
 }
 ```
 
-## Initializing
+### initializing
 
 first time running  
 create a database called “project_db” (or whatever you configured)
 
 then, if you listen the django docs: RTFM :)
 
-### Apply tabe modifications
+### apply tabe modifications
 ```
 $ docker exec -it django_container python /app/manage.py imakemigrations
 ```
 
-### Create tables
+### create tables
 ```
 $ docker exec -it django_container python /app/manage.py migrate
 ```
 
-### Create superuser
+### collect static file
 ```
-$ docker exec -it django_container python /app/manage.py createsuperuser --username coolName --email email@address.com
+python /app/project_files/manage.py collectstatic --noinput
 ```
 
-### Collect static file (if need)
+### create superuser
 ```
-python /app/project_files/manage.py collecstatic --noinput
+$ docker exec -it django_container python /app/manage.py createsuperuser --username coolName --email email@address.com
 ```
