@@ -10,6 +10,7 @@ services:
             - ./html:/var/www/html:ro
             - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
             - ./nginx/conf.d:/etc/nginx/conf.d:ro
+            - ./socket:/tmp
         ports:
             - 80:80
             - 443:443
@@ -23,8 +24,9 @@ services:
         image: django:1.10-alpine
         volumes:
             - ./html/project_files:/app
+            - ./socket:/tmp
         links:
-            - db
+            - djangodb
     
     djangodb:
         image: mariadb:10.1.16

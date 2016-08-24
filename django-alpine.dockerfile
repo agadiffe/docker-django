@@ -4,10 +4,17 @@ FROM python:3.5-alpine
 COPY requirements.txt /app/
 RUN	apk add --no-cache --virtual .build-deps \
 		gcc \
-		python-dev \
-		mysql-client \
-		postgresql-client libpq \
+		linux-headers \
+		musl-dev \
+		python3-dev \
+		mariadb-libs \
+		mariadb-dev \
+		postgresql-dev \
+		libpq \
 		sqlite \
+		# pillow
+		zlib-dev \
+		jpeg-dev \
 	&& pip install -r /app/requirements.txt \
 	&& find /usr/local \
 		\( -type d -a -name test -o -name tests \) \
@@ -24,9 +31,10 @@ RUN	apk add --no-cache --virtual .build-deps \
 	&& apk del .build-deps \
 	&& mkdir /var/log/uwsgi \
 	&& ln -sf /dev/stdout /var/log/uwsgi/config.uwsgi.log \
-	&& ln -sf /dev/stdout /var/log/uwsgi/emperor.log \
-	&& python /app/project_files/manage.py collecstatic --noinput
+	&& ln -sf /dev/stdout /var/log/uwsgi/emperor.log
+
+COPY config_uwsgi/ /config_uwsgi
 
 EXPOSE 29000
 
-CMD /usr/local/bin/uwsgi --emperor /app/config.uwsgi.ini --gid nginx --logto /var/log/uwsgi/emperor.log
+CMD /usr/local/bin/uwsgi --emperor /config_uwsgi --logto /var/log/uwsgi/emperor.log

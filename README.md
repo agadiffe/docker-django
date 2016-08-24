@@ -1,13 +1,39 @@
 # docker-django
 
+## Dockerfile
+According to your django project, you will probably need to add some packages  
+By example, jpeg-dev and zlib-dev are dependencies for pillow
+
+mariadb-libs and mariadb-dev are need, because on alpine, libmysqlclient-dev are not available on alpine linux :(
+
+django, mysqlclient and other stuff, are in requirements.txt, not in dockerfile
+
 ## Config
 
-django files must to be in project_files  
-(means manage.py is in project_files dir)  
-if no app is present, the build will fail ..  
+organisation django app must be something like that:
+```
+html
+└──project_files
+	├── manage.py
+	├── my_app
+	│   ├── __init__.py
+	│   ├── models.py
+	│   ├── tests.py
+	│   └── views.py
+	├── project
+	│   ├── settings.py
+	│   ├── urls.py
+	│   └── wsgi.py
+	└── requirements.txt
+```
+if you want different organization, change:  
+- config_uwsgi/django.ini
+- nginx/conf.d/site-available/django01.confo
 
-the config file must be in project dir.
-(or modify the dockerfile)
+pip requirements
+```
+ln -s html/project_files/requirements.txt .
+```
 
 ## Database
 
@@ -30,11 +56,24 @@ DATABASES = {
 first time running  
 create a database called “project_db” (or whatever you configured)
 
-then, if you listen the django docs:
-```
-# Create tables
-$ docker exec -it django_container python /app/manage.py migrate
+then, if you listen the django docs: RTFM :)
 
-# Create superuser
+### Apply tabe modifications
+```
+$ docker exec -it django_container python /app/manage.py imakemigrations
+```
+
+### Create tables
+```
+$ docker exec -it django_container python /app/manage.py migrate
+```
+
+### Create superuser
+```
 $ docker exec -it django_container python /app/manage.py createsuperuser --username coolName --email email@address.com
+```
+
+### Collect static file (if need)
+```
+python /app/project_files/manage.py collecstatic --noinput
 ```
