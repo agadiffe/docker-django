@@ -2,33 +2,28 @@ version: '2'
 
 services:
     nginx:
-        build:
-            context: .
-            dockerfile: nginx-1.11.3-alpine.dockerfile
         image: nginx:1.11.3-alpine
         volumes:
             - ./html:/var/www/html:ro
             - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
             - ./nginx/conf.d:/etc/nginx/conf.d:ro
-            - ./socket:/tmp
         ports:
             - 80:80
             - 443:443
         links:
-            - django
+            - app
     
-    django:
+    app:
         build: 
             context: .
             dockerfile: django-alpine.dockerfile
-        image: django:1.10-alpine
+        image: myapp_django:1.10-alpine
         volumes:
             - ./html/project_files:/app
-            - ./socket:/tmp
         links:
-            - djangodb
+            - db
     
-    djangodb:
+    db:
         image: mariadb:10.1.16
         volumes:
             - /var/lib/mysql:/var/lib/mysql

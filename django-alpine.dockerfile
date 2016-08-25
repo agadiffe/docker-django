@@ -1,7 +1,7 @@
 #FROM python:2.7-alpine
 FROM python:3.5-alpine
 
-COPY requirements.txt /app/
+COPY requirements.txt /
 RUN	apk add --no-cache --virtual .build-deps \
 		gcc \
 		linux-headers \
@@ -15,7 +15,7 @@ RUN	apk add --no-cache --virtual .build-deps \
 		# pillow
 		zlib-dev \
 		jpeg-dev \
-	&& pip install -r /app/requirements.txt \
+	&& pip install -r /requirements.txt \
 	&& find /usr/local \
 		\( -type d -a -name test -o -name tests \) \
 		-o \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
