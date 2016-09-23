@@ -31,7 +31,7 @@ if you want different name for project, change:
 
 pip requirements
 ```
-ln -s html/project_files/requirements.txt .
+html/project_files/requirements.txt
 ```
 
 ## Database
@@ -59,34 +59,36 @@ DATABASES = {
 ```
 
 ## Install
+for now, work with virtualenv on your dev environment  
+create app or project don't work ..
 
 ### dev environment
 #### create project
 named according to uwsgi and nginx config
 ```
-$ docker exec -it django_container django-admin startproject project
+docker exec -it django_container django-admin startproject project
 ```
 #### create app
 ```
-$ docker exec -it django_container python manage.py startapp app
+docker exec -it django_container python manage.py startapp app
 ```
 
 ### apply tabe modifications
 ```
-$ docker exec -it django_container python manage.py makemigrations
+docker exec -it django_container python manage.py makemigrations
 ```
 
 ### create tables
 ```
-$ docker exec -it django_container python manage.py migrate
+docker exec -it django_container python manage.py migrate
 ```
 
 ### collect static file
 ```
-$ docker exec -it django_container python /app/project_files/manage.py collectstatic --noinput
+docker exec -it django_container python /app/project_files/manage.py collectstatic --noinput
 ```
 
 ### create superuser (if need)
 ```
-$ docker exec -it django_container python /app/manage.py createsuperuser --username coolName --email email@address.com
+docker exec -it django_container python /app/manage.py createsuperuser --username coolName --email email@address.com
 ```

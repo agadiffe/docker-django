@@ -8,13 +8,14 @@ RUN	apk add --no-cache --virtual .build-deps \
 		gcc \
 		linux-headers \
 		musl-dev \
-		python3-dev \
+		#python3-dev \
 		mariadb-libs \
 		mariadb-dev \
 		postgresql-dev \
 		libpq \
 		sqlite \
 		# pillow
+		zlib \
 		zlib-dev \
 		jpeg-dev \
 	&& pip install -r /requirements.txt \
