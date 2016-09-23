@@ -1,5 +1,4 @@
 # docker-django
-for now, if you want 2 django app, you need to do 2 images...  
 
 ## Dockerfile
 According to your django project, you will probably need to add some packages  
@@ -13,9 +12,9 @@ django, mysqlclient and other stuff, are in requirements.txt, not in dockerfile
 organisation django app must be something like that:
 ```
 html
-└──project_files
+└──project
 	├── manage.py
-	├── my_app
+	├── app
 	│   ├── __init__.py
 	│   ├── models.py
 	│   ├── tests.py
@@ -26,9 +25,9 @@ html
 	│   └── wsgi.py
 	└── requirements.txt
 ```
-if you want different name for project_files and project, change:  
-- project_name in config_uwsgi/django.ini
-- project_files in nginx/conf.d/site-available/django01.conf
+if you want different name for project, change:  
+- project (inner) in config_uwsgi/django.ini
+- project (outer) in nginx/conf.d/site-available/django01.conf
 
 pip requirements
 ```
@@ -36,7 +35,7 @@ ln -s html/project_files/requirements.txt .
 ```
 
 ## Database
-don't forgot to configure `project_files/project/settings.py`:
+configure `project/project/settings.py`:
 ```
 DATABASES = {
 	'default': {
@@ -50,25 +49,34 @@ DATABASES = {
 }
 ```
 
-## Initialization
+## Install
 first time running  
-create a database called “project_db” (or whatever you configured in database)
+create a database called “project_db” (or whatever you configured above)
 
-then, if you listen the django docs:
+### dev environment
+## create project
+named according to uwsgi and nginx config
+```
+$ docker exec -it django_container django-admin startproject project
+```
+## create app
+```
+$ docker exec -it django_container python manage.py startapp app
+```
 
 ### apply tabe modifications
 ```
-$ docker exec -it django_container python /app/manage.py imakemigrations
+$ docker exec -it django_container python manage.py makemigrations
 ```
 
 ### create tables
 ```
-$ docker exec -it django_container python /app/manage.py migrate
+$ docker exec -it django_container python manage.py migrate
 ```
 
 ### collect static file
 ```
-python /app/project_files/manage.py collectstatic --noinput
+$ docker exec -it django_container python /app/project_files/manage.py collectstatic --noinput
 ```
 
 ### create superuser (if need)
