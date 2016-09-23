@@ -54,12 +54,12 @@ first time running
 create a database called “project_db” (or whatever you configured above)
 
 ### dev environment
-## create project
+#### create project
 named according to uwsgi and nginx config
 ```
 $ docker exec -it django_container django-admin startproject project
 ```
-## create app
+#### create app
 ```
 $ docker exec -it django_container python manage.py startapp app
 ```
