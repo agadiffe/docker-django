@@ -35,6 +35,15 @@ ln -s html/project_files/requirements.txt .
 ```
 
 ## Database
+### container mariadb
+```
+cp mariadb.config.env.sample mariadb.config.env
+cp php.config.env.sample php.config.env
+```
+then, change default value if needed ...
+
+
+### django
 configure `project/project/settings.py`:
 ```
 DATABASES = {
@@ -50,8 +59,6 @@ DATABASES = {
 ```
 
 ## Install
-first time running  
-create a database called “project_db” (or whatever you configured above)
 
 ### dev environment
 #### create project
