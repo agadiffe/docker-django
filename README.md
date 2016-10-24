@@ -59,14 +59,12 @@ DATABASES = {
 ```
 
 ## Install
-for now, work with virtualenv on your dev environment  
-create app or project don't work ..
 
 ### dev environment
 #### create project
 named according to uwsgi and nginx config
 ```
-docker exec -it django_container django-admin startproject project
+docker exec -it django_container django-admin.py startproject project
 ```
 #### create app
 ```
