@@ -19,7 +19,7 @@ services:
             dockerfile: django-alpine.dockerfile
         image: myapp_django:1.10-alpine
         volumes:
-            - ./html/project_files:/app
+            - ./html/project:/app
         links:
             - db
     
