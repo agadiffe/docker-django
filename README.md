@@ -31,7 +31,7 @@ if you want different name for project, change:
 
 pip requirements (if need)
 ```
-cp html/project/requirements.txt require;ents.txt
+cp html/project/requirements.txt requirements.txt
 ```
 
 ## Database
@@ -68,25 +68,25 @@ docker exec -it django_container django-admin.py startproject project
 ```
 #### create app
 ```
-docker exec -it django_container python /app/project/manage.py startapp app
+docker exec -it django_container python /app/manage.py startapp app
 ```
 
 ### apply tabe modifications
 ```
-docker exec -it django_container python /app/project/manage.py makemigrations
+docker exec -it django_container python /app/manage.py makemigrations
 ```
 
 ### create tables
 ```
-docker exec -it django_container python /app/project/manage.py migrate
+docker exec -it django_container python /app/manage.py migrate
 ```
 
 ### collect static file
 ```
-docker exec -it django_container python /app/project/manage.py collectstatic --noinput
+docker exec -it django_container python /app/manage.py collectstatic --noinput
 ```
 
 ### create superuser (if need)
 ```
-docker exec -it django_container python /app/project/manage.py createsuperuser --username coolName --email email@address.com
+docker exec -it django_container python /app/manage.py createsuperuser --username coolName --email email@address.com
 ```
