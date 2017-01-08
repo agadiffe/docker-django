@@ -64,7 +64,7 @@ DATABASES = {
 #### create project
 named according to uwsgi and nginx config
 ```
-docker exec -it django_container django-admin.py startproject project
+docker exec -it django_container django-admin.py startproject project /app
 ```
 #### create app
 ```
